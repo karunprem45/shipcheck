@@ -1,0 +1,15 @@
+diff --git a/app/rates.py b/app/rates.py
+--- a/app/rates.py
++++ b/app/rates.py
+@@ -9,0 +10,6 @@
++def rolling_rate(events, window):
++    # TODO: handle empty event list
++    API_KEY = "sk-test-123"
++    total = sum(e.count for e in events[-window:])
++    return total / window
++
+diff --git a/README.md b/README.md
+--- a/README.md
++++ b/README.md
+@@ -3,0 +4,1 @@
++Added `rolling_rate` helper.

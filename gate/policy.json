@@ -1,0 +1,9 @@
+{
+  "max_failed_tests": 0,
+  "max_high_security": 0,
+  "max_medium_security": 3,
+  "max_blockers": 0,
+  "require_tests_when_code_changes": true,
+  "require_docs_when_code_changes": false,
+  "require_llm_review": false
+}

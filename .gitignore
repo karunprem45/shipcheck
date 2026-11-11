@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+evidence.json
+review.md
+gate.md
+pr.diff
+junit.xml
+bandit.json
