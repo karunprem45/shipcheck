@@ -27,7 +27,7 @@ metrics/   PR productivity metrics
 ## Run locally
 
 ```bash
-cd agent && python -m unittest discover -s tests        # 11 tests, no API key needed
+cd agent && python -m unittest discover -s tests        # 13 tests, no API key needed
 cd gate && go test ./...                                 # 8 tests
 git diff main...HEAD > pr.diff
 cd agent && python -m shipcheck_agent.cli --diff ../pr.diff --no-llm
@@ -42,3 +42,9 @@ In GitHub, add the key as a repo secret named `ANTHROPIC_API_KEY`.
 - Precision of AI findings on real PRs (label 30+ findings as useful / not useful)
 - Share of suggested tests that get written
 - Gate runtime per PR (read it from the Actions tab)
+
+## CI triggers
+
+- Push to `main`: unit tests only.
+- Pull request: unit tests, then the readiness gate and a PR comment.
+  Without the `ANTHROPIC_API_KEY` secret the gate still runs using static checks only.

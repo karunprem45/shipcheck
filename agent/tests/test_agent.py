@@ -72,6 +72,27 @@ class ReviewTests(unittest.TestCase):
         self.assertTrue(rep["llm_status"].startswith("invalid_output"))
         self.assertEqual(len(rep["static_findings"]), 2)   # static checks survive
 
+    def test_llm_failure_keeps_static_findings(self):
+        class Down:
+            def complete(self, system, prompt):
+                raise ConnectionError("no network")
+        rep = review(DIFF, Down())
+        self.assertEqual(rep["llm_status"], "error: ConnectionError")
+        self.assertTrue(rep["static_findings"])
+
+    def test_empty_api_key_means_no_llm(self):
+        from shipcheck_agent.llm import ClaudeClient
+        old = os.environ.get("ANTHROPIC_API_KEY")
+        os.environ["ANTHROPIC_API_KEY"] = ""
+        try:
+            with self.assertRaises(KeyError):
+                ClaudeClient()
+        finally:
+            if old is None:
+                os.environ.pop("ANTHROPIC_API_KEY")
+            else:
+                os.environ["ANTHROPIC_API_KEY"] = old
+
     def test_strips_code_fences(self):
         self.assertEqual(parse_json('```json\n{"a": 1}\n```'), {"a": 1})
 
