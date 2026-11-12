@@ -42,3 +42,9 @@ In GitHub, add the key as a repo secret named `ANTHROPIC_API_KEY`.
 - Precision of AI findings on real PRs (label 30+ findings as useful / not useful)
 - Share of suggested tests that get written
 - Gate runtime per PR (read it from the Actions tab)
+
+## CI triggers
+
+- Push to `main`: unit tests only.
+- Pull request: unit tests, then the readiness gate and a PR comment.
+  Without the `ANTHROPIC_API_KEY` secret the gate still runs using static checks only.
