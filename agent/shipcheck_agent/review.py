@@ -63,6 +63,9 @@ def review(diff_text, llm, max_attempts=2):
             return report
         except ValueError as exc:   # covers JSONDecodeError and SchemaError
             error = str(exc)
+        except Exception as exc:    # API/network failure: keep the static checks
+            report["llm_status"] = f"error: {type(exc).__name__}"
+            return report
     report["llm_status"] = f"invalid_output: {error}"
     return report
 

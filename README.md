@@ -27,7 +27,7 @@ metrics/   PR productivity metrics
 ## Run locally
 
 ```bash
-cd agent && python -m unittest discover -s tests        # 11 tests, no API key needed
+cd agent && python -m unittest discover -s tests        # 13 tests, no API key needed
 cd gate && go test ./...                                 # 8 tests
 git diff main...HEAD > pr.diff
 cd agent && python -m shipcheck_agent.cli --diff ../pr.diff --no-llm

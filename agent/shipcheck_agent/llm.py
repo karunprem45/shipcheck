@@ -17,8 +17,11 @@ class FakeLLM:
 
 class ClaudeClient:
     def __init__(self, model=None):
+        key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+        if not key:  # CI passes an empty string when the secret is not set
+            raise KeyError("ANTHROPIC_API_KEY")
         import anthropic  # lazy import so tests run without the package
-        self.client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        self.client = anthropic.Anthropic(api_key=key)
         self.model = model or os.environ.get("SHIPCHECK_MODEL", "claude-sonnet-4-5")
 
     def complete(self, system, prompt):
